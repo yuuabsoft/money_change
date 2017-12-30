@@ -32,6 +32,9 @@ class Account extends Entity
     protected $_accessible = [
         'number' => true,
         'bank' => true,
+        'branch' => true,
+        'recipient' => true,
+        'deposit_id' => true,
         'user_id' => true,
         'created' => true,
         'modified' => true,

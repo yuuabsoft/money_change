@@ -13,6 +13,14 @@ use App\Controller\AppController;
 class SalesController extends AppController
 {
 
+    // 権限管理
+    public function isAuthorized($user){
+        if(in_array($this->request->getParam('action'), ['add'])) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    }
+
     /**
      * Index method
      *

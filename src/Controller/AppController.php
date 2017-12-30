@@ -43,6 +43,19 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        // ログイン、ログアウトの遷移先
+        $this->loadComponent('Auth', [
+            'authorize' => 'Controller',
+            'loginRedirect' => [
+                'controller' => 'Users',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login',
+            ],
+            'authError' => 'この場所にアクセスする権限がありません'
+        ]);
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -50,5 +63,22 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
+    }
+
+    // 権限管理
+    public function isAuthorized($user)
+    {
+        // adminは全てアクセス可能
+        if (isset($user['role_id']) && $user['role_id'] === ADMIN_ID){
+            return true;
+        }
+        // userはデフォルト拒否
+        return false;
+    }
+
+    // ログインせずにアクセスできる画面を指定するために必要
+    public function beforeFilter(Event $event)
+    {
+
     }
 }

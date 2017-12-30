@@ -1,0 +1,17 @@
+.action2-td{
+	width: 150px;
+}
+.action-td{
+	width: 85px;
+}
+.action-edit-td{
+	width: 110px;
+}
+/*header footer の中にボタン入れている場合(IE11でスクロールバーに重なってしまうので追加)*/
+.my-inside-right-btn{
+	margin-right: 15px;
+}
+/*headerの中にボタン入っていない場合*/
+.my-right-btn{
+	margin-right: 25px;	
+}

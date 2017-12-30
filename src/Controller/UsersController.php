@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Users Controller
@@ -13,6 +14,51 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    // 権限管理
+    public function isAuthorized($user)
+    {
+        if(in_array($this->request->getParam('action'), ['index', 'view', 'add', 'logout'])) {
+            return true;
+        }
+        if(in_array($this->request->getParam('action'), ['edit'])) {
+            $user_id = (int)$this->request->getParam('pass.0');
+            if($user['id'] === $user_id) {
+                return true;
+            }
+        }
+        return parent::isAuthorized($user);
+    }
+
+    // ログインせずにアクセスできる画面
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add', 'logout']);
+    }
+
+    // ログイン
+    public function login()
+    {
+        //defaultLogin.ctpを使用
+        $this->viewBuilder()->layout('defaultLogin');
+
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('usernameまたはpasswordがちがいます');
+        }
+    }
+
+    // ログアウト
+    public function logout()
+    {
+        $this->Flash->success('ログアウトしました。');
+        return $this->redirect($this->Auth->logout());
+    }
+
     /**
      * Index method
      *
@@ -20,12 +66,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Roles']
-        ];
-        $users = $this->paginate($this->Users);
 
-        $this->set(compact('users'));
     }
 
     /**
@@ -37,6 +78,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        $id = $this->Auth->user('id');
         $user = $this->Users->get($id, [
             'contain' => ['Roles', 'Accounts', 'Exchanges', 'Sales']
         ]);

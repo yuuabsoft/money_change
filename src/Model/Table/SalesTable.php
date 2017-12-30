@@ -82,4 +82,9 @@ class SalesTable extends Table
 
         return $rules;
     }
+
+    // 権限管理の際に使用
+    public function isOwnedBy($sale_id, $user_id){
+        return $this->exists(['id' => $sale_id, 'user_id' => $user_id]);
+    }
 }

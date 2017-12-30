@@ -51,7 +51,8 @@ class ExchangesTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Statuses', [
-            'foreignKey' => 'status_id'
+            'foreignKey' => 'status_id',
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -92,5 +93,10 @@ class ExchangesTable extends Table
         $rules->add($rules->existsIn(['status_id'], 'Statuses'));
 
         return $rules;
+    }
+
+    // 権限管理の際に使用
+    public function isOwnedBy($exchange_id, $user_id){
+        return $this->exists(['id' => $exchange_id, 'user_id' => $user_id]);
     }
 }

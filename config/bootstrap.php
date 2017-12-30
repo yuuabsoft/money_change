@@ -214,3 +214,6 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+//定数定義ファイル読み込み
+Configure::load('const', 'default');

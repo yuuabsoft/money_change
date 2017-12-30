@@ -48,6 +48,10 @@ class AccountsTable extends Table
         $this->hasMany('Exchanges', [
             'foreignKey' => 'account_id'
         ]);
+        $this->belongsTo('Deposits', [
+            'foreignKey' => 'deposit_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -71,7 +75,17 @@ class AccountsTable extends Table
         $validator
             ->scalar('bank')
             ->requirePresence('bank', 'create')
-            ->notEmpty('bank');
+            ->allowEmpty('bank');
+
+        $validator
+            ->scalar('branch')
+            ->requirePresence('branch', 'create')
+            ->allowEmpty('branch');
+
+        $validator
+            ->scalar('recipient')
+            ->requirePresence('recipient', 'create')
+            ->allowEmpty('recipient');
 
         $validator
             ->dateTime('deleted')
@@ -91,7 +105,13 @@ class AccountsTable extends Table
     {
         $rules->add($rules->isUnique(['number']));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['deposit_id'], 'Deposits'));
 
         return $rules;
+    }
+
+    // 権限管理の際に使用
+    public function isOwnedBy($account_id, $user_id){
+        return $this->exists(['id' => $account_id, 'user_id' => $user_id]);
     }
 }

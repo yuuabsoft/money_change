@@ -1,59 +1,49 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Account[]|\Cake\Collection\CollectionInterface $accounts
- */
+  * Accounts index.ctp
+  * @var \App\View\AppView $this
+  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
+  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Account'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Exchanges'), ['controller' => 'Exchanges', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Exchange'), ['controller' => 'Exchanges', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="accounts index large-9 medium-8 columns content">
-    <h3><?= __('Accounts') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('number') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('deleted') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($accounts as $account): ?>
-            <tr>
-                <td><?= $this->Number->format($account->id) ?></td>
-                <td><?= $this->Number->format($account->number) ?></td>
-                <td><?= $account->has('user') ? $this->Html->link($account->user->id, ['controller' => 'Users', 'action' => 'view', $account->user->id]) : '' ?></td>
-                <td><?= h($account->created) ?></td>
-                <td><?= h($account->modified) ?></td>
-                <td><?= h($account->deleted) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $account->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $account->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $account->id], ['confirm' => __('Are you sure you want to delete # {0}?', $account->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title border-btm" id="page-title"><i class="fa fa-table"></i> 口座一覧
+    </h3>
+  </div>
+  <div class="box-body">
+    <?= $this->Html->link('口座の追加', ['action' => 'add'], ['class' => 'btn btn-primary btn-block', 'style' => 'margin-bottom: 10px', 'escape' => false]) ?>
+    <?php foreach ($accounts as $account): ?>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title col-sm-8" id="page-title"> 口座
+            </h3>
+            <div class="col-sm-4">
+                <?= $this->Html->link('変更・削除', ['action' => 'edit', $account->id], ['class' => 'btn btn-warning pull-right', 'escape' => false]) ?>
+            </div>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td>口座番号</td>
+                        <td><?= $account->has('number') ? h($account->number) : '' ?></td>
+                    </tr>
+                    <tr>
+                        <td>銀行名</td>
+                        <td><?= $account->has('bank') ? h($account->bank) : '' ?></td>
+                    </tr>
+                    <tr>
+                        <td>支店名</td>
+                        <td><?= $account->has('branch') ? h($account->branch) : '' ?></td>
+                    </tr>
+                    <tr>
+                        <td>受取人名</td>
+                        <td><?= $account->has('recipient') ? h($account->recipient) : '' ?></td>
+                    </tr>
+                <tbody>
+            </table>
+        </div>
     </div>
+    <?php endforeach; ?>
+  </div>
 </div>

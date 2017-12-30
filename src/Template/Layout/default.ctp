@@ -1,57 +1,48 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
-?>
 <!DOCTYPE html>
-<html>
+<html lang="jp">
 <head>
     <?= $this->Html->charset() ?>
+    <meta http-equiv="Content-Language" content="ja">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="none">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        money_change
     </title>
     <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->css('bootstrap.min.css') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+    <?= $this->Html->css('cake_customized.css') ?>
+    <?= $this->Html->css('AdminLTE.min.css') ?>
+    <?= $this->Html->css('skins/skin-yellow.min.css') ?>
+
+    <!--<?= $this->Html->script('../plugins/jQuery/jquery-2.2.3.min.js'); ?>-->
+    <?= $this->Html->script('../plugins/jQuery/jquery-3.2.1.min.js'); ?>
+
+    <?= $this->Html->script('bootstrap.min.js') ?>
+
+    <?= $this->Html->css('../plugins/datepicker/datepicker3.css') ?>
+    <?= $this->Html->css('myStyle.css') ?>
+
+    <?= $this->Html->script('app.min.js'); ?>
+
+    <?= $this->Html->script('../plugins/slimScroll/jquery.slimscroll.min.js'); ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer>
+<body class="skin-yellow fixed">
+
+<div class="content-wrapper">
+<?= $this->Flash->render(); ?>
+<?= $this->element('header') ?>
+<?= $this->element('sidebar') ?>
+
+<?= $this->fetch('content') ?>
+</div>
+
 </body>
 </html>

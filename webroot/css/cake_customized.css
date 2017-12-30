@@ -1,0 +1,21 @@
+.required > label {
+    font-weight: bold;
+}
+.required > label:after {
+    content: ' *';
+    /*  色を黒に変更*/
+}
+.error label,
+.error label.error {
+    color: #C3232D;
+}
+/* 追加 by koyo*/
+.error-message{
+    color: #C3232D;
+}
+.asc:after {
+    content: " \2193";
+}
+.desc:after {
+    content: " \2191";
+}

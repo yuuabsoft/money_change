@@ -1,33 +1,29 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Exchange $exchange
- */
+  * Exchanges add.ctp
+  * @var \App\View\AppView $this
+  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Exchanges'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Accounts'), ['controller' => 'Accounts', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Account'), ['controller' => 'Accounts', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Statuses'), ['controller' => 'Statuses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Status'), ['controller' => 'Statuses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="exchanges form large-9 medium-8 columns content">
-    <?= $this->Form->create($exchange) ?>
-    <fieldset>
-        <legend><?= __('Add Exchange') ?></legend>
-        <?php
-            echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('account_id', ['options' => $accounts]);
-            echo $this->Form->control('amount');
-            echo $this->Form->control('status_id', ['options' => $statuses, 'empty' => true]);
-            echo $this->Form->control('deleted', ['empty' => true]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-download"></i> <?= 'コインを交換する'?></h3>
+    </div>
+        <?= $this->Form->create($exchange, ['novalidate' => true]) ?>
+        <div class="box-body">
+          <div class="row">
+            <div class="form-group col-sm-5">
+               <?= $this->Form->control('amount', ['type' => 'text', 'label' => 'コイン', 'class' => 'form-control', 'placeholder' => 'コイン']);?>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-5">
+               <?= $this->Form->control('account_id', ['label' => '口座', 'options' => $accounts, 'class' => 'form-control', 'emtpy'=>true]);?>
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+            <?= $this->Form->button('<i class="fa fa-download"></i><span>&ensp;</span>' . '追加', ['class' => 'btn btn-success', 'escape' => false]) ?>
+        </div>
     <?= $this->Form->end() ?>
 </div>
